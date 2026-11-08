@@ -17,6 +17,9 @@ def find_recipes(ingredients, min_match=40):
         if item.strip()
     ]
 
+    # Remove duplicate ingredients
+    ingredient_list = list(dict.fromkeys(ingredient_list))
+
     if not ingredient_list:
         return []
 
@@ -47,7 +50,8 @@ def find_recipes(ingredients, min_match=40):
         else:
             corrected_ingredients.append(item)
 
-    ingredient_list = corrected_ingredients
+    # Remove duplicate after spelling correction
+    ingredient_list = list(dict.fromkeys(corrected_ingredients))
 
     # Find recipes based on matched ingredients
     recipe_results = []
