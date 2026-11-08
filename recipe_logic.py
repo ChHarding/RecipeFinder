@@ -17,8 +17,11 @@ def find_recipes(ingredients, min_match=40):
         if item.strip()
     ]
 
+    # Remove duplicate ingredients
+    ingredient_list = list(dict.fromkeys(ingredient_list))
+
     if not ingredient_list:
-        return []
+        return [], []
 
     # Get all ingredients from recipes
     all_ingredients = []
@@ -34,6 +37,7 @@ def find_recipes(ingredients, min_match=40):
 
     # Correct possible spelling mistakes
     corrected_ingredients = []
+    corrections = []
 
     for item in ingredient_list:
         match = process.extractOne(
@@ -44,10 +48,13 @@ def find_recipes(ingredients, min_match=40):
 
         if match and match[1] >= 80:
             corrected_ingredients.append(match[0])
+            if item != match[0]:
+                corrections.append((item, match[0]))
         else:
             corrected_ingredients.append(item)
 
-    ingredient_list = corrected_ingredients
+    # Remove duplicate after spelling correction
+    ingredient_list = list(dict.fromkeys(corrected_ingredients))
 
     # Find recipes based on matched ingredients
     recipe_results = []
@@ -93,4 +100,4 @@ def find_recipes(ingredients, min_match=40):
         reverse=True
     )
 
-    return recipe_results
+    return recipe_results, corrections
