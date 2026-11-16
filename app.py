@@ -18,7 +18,12 @@ if st.button("Find Recipes"):
     if ingredients.strip():
 
         # Get recipe recommendations
-        results = find_recipes(ingredients)
+        results, corrections = find_recipes(ingredients)
+
+        # Show spelling correcitons
+        if corrections:
+            for original, corrected in corrections:
+                st.info(f"Spelling corrected: {original} → {corrected}")
 
         if results:
 
