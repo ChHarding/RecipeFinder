@@ -6,11 +6,77 @@ st.title("🍳 RecipeFinder")
 
 st.write("Find recipes using ingredients you already have!")
 
-# Ingredient input
-ingredients = st.text_input(
-    "Enter your ingredients:",
-    placeholder="e.g., chicken, tomato, onion"
+# Ingredient quick selection
+st.subheader("What do you have?")
+st.write("Select ingredients below or enter your own.")
+
+ingredients_options = {
+    "🥩 Protein": [
+        "chicken", "beef", "eggs", "shrimp"
+    ],
+    "🥦 Vegetables": [
+        "tomato", "onion", "potato", "carrot", "broccoli", "lettuce"
+        ],
+    "🍚 Grains & Dairy": [
+        "rice", "pasta", "bread", "milk", "cheese", "butter"
+    ]
+}
+
+# Clear all selected ingredients
+def clear_ingredients():
+    for category in ingredients_options:
+        st.session_state[category] = []
+
+    st.session_state["manual_ingredients"] = ""
+
+selected_ingredients = []
+for category, items in ingredients_options.items():
+    st.write(f"**{category}**")
+    selected = st.pills(
+        category,
+        items,
+        selection_mode="multi",
+        label_visibility="collapsed",
+        key=category
+    )
+    selected_ingredients.extend(selected)
+
+# User input for ingredients
+user_input = st.text_input(
+    "Other ingredients",
+    placeholder="e.g., garlic, cucumber, olive oil",
+    key= "manual_ingredients"
 )
+
+# Combine selected ingredients and user input
+all_ingredients = selected_ingredients.copy()
+
+if user_input:
+    all_ingredients.extend(
+        item.strip()
+        for item in user_input.split(",")
+        if item.strip()
+    )
+
+# Remove duplicates and normalize ingredients
+all_ingredients = list(dict.fromkeys(
+    item.lower() for item in all_ingredients
+))
+
+ingredients = ", ".join(all_ingredients)
+
+# Selected ingredients summay
+col1, col2 = st.columns([3, 1])
+
+with col1:
+    st.write(f"**{len(all_ingredients)} Ingredients selected**")
+
+with col2:
+    st.button(
+        "Clear All",
+        on_click=clear_ingredients,
+        disabled=len(all_ingredients) == 0
+    )
 
 # Search button
 if st.button("Find Recipes"):
