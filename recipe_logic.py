@@ -2,18 +2,11 @@ import pandas as pd
 from rapidfuzz import process, fuzz
 from pathlib import Path
 
-
-# Load recipe data from both CSV files
 DATA_DIR = Path(__file__).parent
 
-recipes_original = pd.read_csv(DATA_DIR / "recipes.csv")
-recipes_teacher = pd.read_csv(DATA_DIR / "recipes_CH.csv")
+# Load recipes from the expanded dataset
+recipes = pd.read_csv(DATA_DIR / "recipes_CH.csv")
 
-# Combine ricipes and remove dulplicates by recipe name
-recipes = pd.concat(
-    [recipes_original, recipes_teacher],
-    ignore_index=True
-)
 
 recipes["name"] = recipes["name"].str.strip()
 
@@ -22,8 +15,8 @@ recipes = recipes.drop_duplicates(
     keep="first"
 ).reset_index(drop=True)
 
-def find_recipes(ingredients, min_match=40):
-    
+def find_recipes(ingredients, min_match=1):
+
     # Convert user input into a list
     ingredient_list = [
         item.strip().lower()
