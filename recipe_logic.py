@@ -2,13 +2,20 @@ import pandas as pd
 from rapidfuzz import process, fuzz
 from pathlib import Path
 
+DATA_DIR = Path(__file__).parent
 
-# Load recipe data
-DATA_FILE = Path(__file__).parent / "recipes.csv"
-recipes = pd.read_csv(DATA_FILE)
+# Load recipes from the expanded dataset
+recipes = pd.read_csv(DATA_DIR / "recipes_CH.csv")
 
 
-def find_recipes(ingredients, min_match=40):
+recipes["name"] = recipes["name"].str.strip()
+
+recipes = recipes.drop_duplicates(
+    subset=["name"],
+    keep="first"
+).reset_index(drop=True)
+
+def find_recipes(ingredients, min_match=1):
 
     # Convert user input into a list
     ingredient_list = [
