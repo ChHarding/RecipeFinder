@@ -1,3 +1,6 @@
+# To run the application, use the following command in the terminal:
+# streamlit run app.py
+
 import re
 
 import html
@@ -477,8 +480,7 @@ if st.session_state.page == "results" and results is not None:
                 unsafe_allow_html=True
             )
 
-        # Show ingredient corrections
-        if corrections:
+            # Show ingredient corrections
             for original, corrected in corrections:
                 st.caption(
                     f"Ingredient recognized: {original} → {corrected}"

@@ -43,7 +43,7 @@ The goal of this project is to help users find recipes using available ingredien
 2. Run the Streamlit application:
 
    ```bash
-   python3 -m streamlit run app.py
+   streamlit run app.py
    ```
 
 3. Open the local URL displayed in the terminal.
