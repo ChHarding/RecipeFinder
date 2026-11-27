@@ -15,6 +15,12 @@ The goal of this project is to help users find recipes using available ingredien
 - Remove duplicate ingredients from user input.
 - Provide feedback when no ingredients are entered or no recipes match.
 - Use a simple web interface built with Streamlit.
+- Select common ingredients using quick selection buttons.
+- Clear all selected ingredientss with onec click.
+- Display the number of selcted ingredients.
+- Filter recipes by match percentage.
+- Save and remove favorite recipes.
+- View saved recipes on the My favorites page.
 
 ## Technologies Used
 
@@ -43,12 +49,12 @@ The goal of this project is to help users find recipes using available ingredien
 2. Run the Streamlit application:
 
    ```bash
-   python3 -m streamlit run app.py
+   streamlit run app.py
    ```
 
 3. Open the local URL displayed in the terminal.
 
-4. Enter ingredients separated by commas.
+4. Select ingredients using the ingredient buttons or enter ingredients separated by commas.
 
 5. Click "Find Recipes" to view recommendations.
 
@@ -67,7 +73,7 @@ It then displays matching recipes with match percentages, missing ingredients, a
 
 ## Current Progress
 
-The application currently includes a working Streamlit interface, recipe matching, spelling correction, duplicate ingredient handling, and basic input validation.
+The application currently includes an interactive Streamlit interface, ingredient selection, recipe matching, spelling correction, duplicate ingredient handling, match percentage filtering, sorting, and favorite recipe management.
 
 ## Future Improvements
 
